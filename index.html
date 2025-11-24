@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VivoPaint | Enterprise AI Inpainting</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Using FontAwesome for Enterprise Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> VivoPaint
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="document.getElementById('imageLoader').click()">
+                    <i class="fa-solid fa-upload"></i> Import Image
+                </button>
+                <input type="file" id="imageLoader" accept="image/*" hidden>
+                <button class="btn btn-primary" id="exportBtn">
+                    <i class="fa-solid fa-download"></i> Export
+                </button>
+            </div>
+        </header>
 
+        <div class="workspace">
+            <!-- Sidebar Tools -->
+            <aside class="toolbar">
+                <div class="tool-group">
+                    <button class="tool-btn active" id="tool-brush" title="Mask Brush">
+                        <i class="fa-solid fa-paintbrush"></i>
+                    </button>
+                    <button class="tool-btn" id="tool-eraser" title="Eraser">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    <button class="tool-btn" id="tool-pan" title="Pan/Move">
+                        <i class="fa-solid fa-hand"></i>
+                    </button>
+                </div>
+                
+                <div class="divider"></div>
+
+                <div class="property-panel">
+                    <label>Brush Size</label>
+                    <input type="range" id="brushSize" min="5" max="100" value="30">
+                    
+                    <label>Mask Opacity</label>
+                    <input type="range" id="maskOpacity" min="0" max="100" value="50">
+                </div>
+            </aside>
+
+            <!-- Main Canvas Area -->
+            <main class="canvas-viewport" id="viewport">
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <div class="empty-state" id="emptyState">
+                        <i class="fa-solid fa-image"></i>
+                        <p>Upload an image to begin inpainting</p>
+                    </div>
+                    <canvas id="imageCanvas"></canvas>
+                    <canvas id="maskCanvas"></canvas>
+                    <canvas id="resultCanvas"></canvas> <!-- Hidden until generation -->
+                    <div class="cursor-overlay" id="cursorOverlay"></div>
+                </div>
+            </main>
+
+            <!-- Prompt / AI Panel -->
+            <aside class="ai-panel">
+                <h3>AI Controls</h3>
+                <div class="form-group">
+                    <label>Prompt</label>
+                    <textarea id="promptInput" placeholder="Describe what you want to generate in the masked area..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Negative Prompt</label>
+                    <input type="text" id="negPromptInput" placeholder="What to avoid...">
+                </div>
+                
+                <div class="info-box">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <small>Paint over the area you want to change, describe the change, and click Generate.</small>
+                </div>
+
+                <div class="bottom-actions">
+                    <button class="btn btn-accent btn-block" id="generateBtn">
+                        <i class="fa-solid fa-bolt"></i> Generate Fill
+                    </button>
+                    <button class="btn btn-secondary btn-block" id="clearMaskBtn" style="margin-top: 10px;">
+                        Clear Mask
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loader-overlay" id="loader">
+        <div class="spinner"></div>
+        <p>VivoPaint AI is dreaming...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
